@@ -6,11 +6,19 @@
 </head>
 <body>
 <h1>📝 문의 작성</h1>
-  <form method="post" action="/qna">
-    <label>작성자 ID: <input name="userId" /></label><br>
-    <label>제목: <input name="title" /></label><br>
-    <label>내용: <textarea name="content" rows="4" cols="50"></textarea></label><br>
-    <button type="submit">문의 등록</button>
-  </form>
+<form method="post" action="/qna">
+  <label>작성자 ID: <input name="userId" /></label><br>
+  <label>제목: <input name="title" /></label><br>
+  <label>내용: <textarea name="content" rows="4" cols="50"></textarea></label><br>
+  <label>분야:
+    <select name="field">
+      <option value="가슴">가슴</option>
+      <option value="어깨">어깨</option>
+      <option value="등">등</option>
+      <option value="하체">하체</option>
+    </select>
+  </label><br>
+  <button type="submit">문의 등록</button>
+</form>
 </body>
 </html>
