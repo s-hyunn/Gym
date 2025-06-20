@@ -19,9 +19,11 @@ public class QnaEntity extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qna_seq_gen")
 	@SequenceGenerator(
-	    name = "qna_seq_gen",        // generator 이름 (JPA 내부 참조용)
-	    sequenceName = "QNA_SEQ",    // 실제 DB 시퀀스 이름
-	    allocationSize = 1           // 1씩 증가
+
+	    name = "qna_seq_gen",           // JPA 식별용 이름
+	    sequenceName = "QNA_SEQ",       // 오라클 실제 시퀀스 이름 (대소문자 주의)
+	    allocationSize = 1              // 1씩 증가
+
 	)
 	private Long qno;
 
