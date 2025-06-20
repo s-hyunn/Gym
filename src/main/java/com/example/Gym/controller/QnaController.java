@@ -45,7 +45,6 @@ public class QnaController {
     }
 
     @PostMapping("/qna/answer")
-    @ResponseBody
     public String answerQna(@RequestParam("qno") Long qno,
                             @RequestParam("answer") String answer) {
         qnaService.answer(qno, answer);
@@ -72,16 +71,19 @@ public class QnaController {
         String field = loginUser.getField();
         List<QnaEntity> qnaList;
 
-        if (status != null && !status.isEmpty()) {
-            qnaList = qnaService.getFilteredInquiries(status, field);
+        if (status == null || status.isEmpty() || status.equals("전체")) {
+            // ✅ 전체 보기
+            qnaList = qnaService.getAllInquiriesByField(field);
         } else {
-            qnaList = qnaService.getManagerInquiries(field);
+            // ✅ 상태 필터 적용
+            qnaList = qnaService.getFilteredInquiries(status, field);
         }
 
         model.addAttribute("qnaList", qnaList);
         model.addAttribute("status", status);
         return "manager_qna";
     }
+
     
     @GetMapping("/qna/user/view")
     public String showUserQnaPage(HttpServletRequest request, Model model) {

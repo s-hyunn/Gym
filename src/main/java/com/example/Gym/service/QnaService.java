@@ -40,7 +40,7 @@ public class QnaService {
     public List<QnaEntity> getFilteredInquiries(String status, String field) {
         return qnaRepository.findByStatusAndField(status, field);
     }
-
+    
     public void answer(Long qno, String answer) {
         QnaEntity qna = qnaRepository.findById(qno).orElseThrow();
         qna.setAnswer(answer);
@@ -54,5 +54,11 @@ public class QnaService {
         qna.setStatus("미답변");
         qnaRepository.save(qna);
     }
+    
+ // 필터 없이 전체 조회
+    public List<QnaEntity> getAllInquiriesByField(String field) {
+        return qnaRepository.findByField(field);
+    }
+
 }
 	
