@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>백엔드 테스트 폼</title>
+</head>
+<body>
+
+<h1>🔐 로그인</h1>
+<form method="post" action="http://localhost:8090/login">
+  <label>ID: <input name="id" /></label><br>
+  <label>PW: <input name="pw" type="password" /></label><br>
+  <button type="submit">로그인</button>
+</form>
+
+  <h1>✅ 사용자 등록 (회원 또는 매니저)</h1>
+  <form method="post" action="http://localhost:8090/user/register">
+    <label>ID: <input name="id" /></label><br>
+    <label>PW: <input name="pw" type="password" /></label><br>
+    <label>이름: <input name="name" /></label><br>
+    <label>역할: 
+      <select name="role">
+        <option value="ROLE_USER">일반 사용자</option>
+        <option value="ROLE_MANAGER">매니저</option>
+      </select>
+    </label><br>
+    <label>분야 (매니저용): <input name="field" /></label><br>
+    <button type="submit">회원 등록</button>
+  </form>
+
+  <hr>
+
+  <h1>📝 문의 작성</h1>
+  <form method="post" action="http://localhost:8090/qna">
+    <label>작성자 ID: <input name="userId" /></label><br>
+    <label>제목: <input name="title" /></label><br>
+    <label>내용: <textarea name="content" rows="4" cols="50"></textarea></label><br>
+    <button type="submit">문의 등록</button>
+  </form>
+
+  <hr>
+
+  <h1>📄 마이페이지 - 내가 남긴 문의 조회</h1>
+  <form method="get" action="http://localhost:8090/qna/user">
+    <label>작성자 ID: <input name="userId" /></label>
+    <button type="submit">조회</button>
+  </form>
+
+  <hr>
+
+  <h1>📩 매니저페이지 - 담당 분야 문의 조회</h1>
+  <form method="get" action="http://localhost:8090/qna/manager">
+    <label>담당 분야: <input name="field" /></label>
+    <button type="submit">조회</button>
+  </form>
+
+  <hr>
+
+  <h1>✍️ 문의 답변 등록</h1>
+  <form method="post" action="http://localhost:8090/qna/answer">
+    <label>문의 번호 (qno): <input name="qno" /></label><br>
+    <label>답변 내용: <textarea name="answer" rows="4" cols="50"></textarea></label><br>
+    <button type="submit">답변 등록</button>
+  </form>
+</body>
+</html>
