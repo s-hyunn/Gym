@@ -1,88 +1,62 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>나의 문의 내역</title>
-    <style>
-        table { width: 90%; margin: 20px auto; border-collapse: collapse; }
-        th, td { border: 1px solid #aaa; padding: 10px; text-align: left; }
-        th { background-color: #f5f5f5; }
-        h2 { text-align: center; }
-
-        .btn-container {
-            text-align: right;
-            width: 90%;
-            margin: 10px auto;
-        }
-
-        .btn-container a {
-            display: inline-block;
-            padding: 8px 16px;
-            background-color: #4285f4;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-
-        .btn-container a:hover {
-            background-color: #2a65d0;
-        }
-
-        .answer-row {
-            display: none;
-            background-color: #f9f9f9;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>나의 문의 내역</title>
+  <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-    <h2>나의 문의 내역</h2>
+  <div class="container">
+    <h2>📋 나의 문의 내역</h2>
 
     <div class="btn-container">
-        <a th:href="@{/writeQna}">문의하기</a>
+      <a th:href="@{/writeQna}" class="btn">문의하기</a>
     </div>
 
     <table>
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th>작성자</th>
-                <th>제목</th>
-                <th>내용</th>
-                <th>상태</th>
-                <th>작성일</th>
-            </tr>
-        </thead>
-        <tbody th:if="${qnaList != null}">
-            <tr th:each="qna, iterStat : ${qnaList}">
-                <td th:text="${qna.qno}">1</td>
-                <td th:text="${qna.user.id}">작성자</td>
-                <td th:text="${qna.title}">제목</td>
-                <td th:text="${qna.content}">내용</td>
-                <td>
-                    <span th:if="${qna.status != '답변완료'}" th:text="${qna.status}">상태</span>
-                    <a th:if="${qna.status == '답변완료'}"
-                       href="javascript:void(0);"
-                       th:onclick="'toggleAnswer(' + ${iterStat.index} + ');'"
-                       style="color: #4285f4; text-decoration: underline;">답변보기</a>
-                </td>
-                <td th:text="${#temporals.format(qna.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</td>
-            </tr>
-            <tr th:each="qna, iterStat : ${qnaList}" th:if="${qna.status == '답변완료'}" th:id="'answerRow-' + ${iterStat.index}" class="answer-row">
-                <td colspan="6">
-                    <strong>답변:</strong>
-                    <div th:text="${qna.answer}">답변 내용</div>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>번호</th>
+          <th>작성자</th>
+          <th>제목</th>
+          <th>내용</th>
+          <th>상태</th>
+          <th>작성일</th>
+        </tr>
+      </thead>
+      <tbody th:if="${qnaList != null}">
+        <tr th:each="qna, iterStat : ${qnaList}">
+          <td th:text="${qna.qno}">1</td>
+          <td th:text="${qna.user.id}">작성자</td>
+          <td th:text="${qna.title}">제목</td>
+          <td th:text="${qna.content}">내용</td>
+          <td>
+            <span th:if="${qna.status != '답변완료'}" th:text="${qna.status}">상태</span>
+            <a th:if="${qna.status == '답변완료'}"
+               href="javascript:void(0);"
+               th:onclick="'toggleAnswer(' + ${iterStat.index} + ');'"
+               class="answer-toggle">답변보기</a>
+          </td>
+          <td th:text="${#temporals.format(qna.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</td>
+        </tr>
+        <tr th:each="qna, iterStat : ${qnaList}" th:if="${qna.status == '답변완료'}"
+            th:id="'answerRow-' + ${iterStat.index}" class="answer-row">
+          <td colspan="6">
+            <strong>답변:</strong>
+            <div th:text="${qna.answer}">답변 내용</div>
+          </td>
+        </tr>
+      </tbody>
     </table>
+  </div>
 
-    <script>
-        function toggleAnswer(index) {
-            const row = document.getElementById("answerRow-" + index);
-            if (row) {
-                row.style.display = (row.style.display === "none" || row.style.display === "") ? "table-row" : "none";
-            }
-        }
-    </script>
+  <script>
+    function toggleAnswer(index) {
+      const row = document.getElementById("answerRow-" + index);
+      if (row) {
+        row.style.display = (row.style.display === "none" || row.style.display === "") ? "table-row" : "none";
+      }
+    }
+  </script>
 </body>
 </html>
