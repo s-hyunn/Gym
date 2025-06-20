@@ -34,8 +34,8 @@ public class QnaController {
 
     @GetMapping("/qna/user")
     @ResponseBody
-    public List<QnaEntity> getUserQna(@RequestParam("userId") String userId) {
-        return qnaService.getUserInquiries(userId);
+    public List<QnaEntity> getUserQna(@RequestParam("id") String id) {
+        return qnaService.getUserInquiries(id);
     }
 
     @GetMapping("/qna/manager")

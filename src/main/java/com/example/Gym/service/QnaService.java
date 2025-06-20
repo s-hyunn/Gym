@@ -29,8 +29,8 @@ public class QnaService {
         qnaRepository.save(qna);
     }
 
-    public List<QnaEntity> getUserInquiries(String userId) {
-        return qnaRepository.findByUser_Id(userId);
+    public List<QnaEntity> getUserInquiries(String id) {
+        return qnaRepository.findByUser_Id(id);
     }
 
     public List<QnaEntity> getManagerInquiries(String field) {
