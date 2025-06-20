@@ -1,16 +1,19 @@
 package com.example.Gym.controller;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import com.example.Gym.entity.UserEntity;
+import com.example.Gym.enums.Role;
 import com.example.Gym.service.UserService;
 import com.example.Gym.util.JWTUtil;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import lombok.RequiredArgsConstructor;
 
-@RestController
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
 @RequiredArgsConstructor
 public class LoginController {
 
@@ -18,19 +21,38 @@ public class LoginController {
     private final JWTUtil jwtUtil; // ✅ JWT 유틸 주입
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestParam("id") String id,
-                                        @RequestParam("pw") String pw) {
+    public String login(@RequestParam("id") String id,
+                        @RequestParam("pw") String pw,
+                        HttpServletRequest request,
+                        Model model) {
+
         boolean success = userService.login(id, pw);
+
         if (success) {
             UserEntity user = userService.getUser(id);
 
-            // JWT 토큰 생성
-            String token = jwtUtil.createToken(user.getId(), user.getRole().name());
+            // ✅ 세션에 유저 저장
+            request.getSession().setAttribute("loginUser", user);
 
-            return ResponseEntity.ok("로그인 성공 ✅\nAccess Token: " + token);
+            // ✅ JWT 토큰 생성 및 저장 (원하면 response header 또는 cookie에도 넣을 수 있음)
+            String token = jwtUtil.createToken(user.getId(), user.getRole().name());
+            request.getSession().setAttribute("jwt", token); // 임시 저장
+
+            // ✅ 역할별 분기
+            if (user.getRole() == Role.ROLE_MANAGER) {
+                return "redirect:/qna/manager/view";
+            } else {
+                return "redirect:/myPage";
+            }
+
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                                 .body("❌ 로그인 실패: 아이디 또는 비밀번호 확인");
+            model.addAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
+            return "login"; // 로그인 실패 시 다시 로그인 페이지
         }
+    }
+
+    @GetMapping("/myPage")
+    public String myPage() {
+        return "myPage"; // 뷰 이름
     }
 }

@@ -6,8 +6,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-	@GetMapping("/test")
+	@GetMapping("/")
 	public String test() {
-		return "test";
+		return "login";
+	}
+	
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+	@GetMapping("/regist")
+	public String regist() {
+		return "regist";
+	}
+	@GetMapping("/writeQna")
+	public String writeQna() {
+		return "writeQna";
+	}
+	@GetMapping("/answerQna")
+	public String answerQna() {
+		return "answerQna";
 	}
 }
