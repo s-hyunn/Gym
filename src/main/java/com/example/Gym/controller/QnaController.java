@@ -45,7 +45,6 @@ public class QnaController {
     }
 
     @PostMapping("/qna/answer")
-    @ResponseBody
     public String answerQna(@RequestParam("qno") Long qno,
                             @RequestParam("answer") String answer) {
         qnaService.answer(qno, answer);
