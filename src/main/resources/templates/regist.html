@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>✅ 사용자 등록 (회원 또는 매니저)</h1>
+  <form method="post" action="/user/register">
+    <label>ID: <input name="id" /></label><br>
+    <label>PW: <input name="pw" type="password" /></label><br>
+    <label>이름: <input name="name" /></label><br>
+    <label>역할: 
+      <select name="role">
+        <option value="ROLE_USER">일반 사용자</option>
+        <option value="ROLE_MANAGER">매니저</option>
+      </select>
+    </label><br>
+    <label>분야 (매니저용): <input name="field" /></label><br>
+    <button type="submit">회원 등록</button>
+  </form>
+</body>
+</html>

@@ -41,9 +41,4 @@ public class UserController {
         return "successPage"; // /templates/successPage.html
     }
 
-    // 에러 페이지 매핑 (선택사항)
-    @GetMapping("/errorPage")
-    public String errorPage() {
-        return "errorPage"; // /templates/errorPage.html
-    }
 }
