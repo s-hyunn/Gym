@@ -43,6 +43,11 @@ public class QnaService {
         qna.setStatus("완료");
         qnaRepository.save(qna);
     }
-    
-    
+   
+    public List<QnaEntity> getQnaForManager(String username) {
+        UserEntity manager = userRepository.findById(username).orElseThrow();
+        String field = manager.getField();
+        return qnaRepository.findByStatusAndUser_Field("미답변", field);
+    }
+
 }
