@@ -24,10 +24,12 @@ public class QnaController {
     @ResponseBody
     public ResponseEntity<?> createInquiry(@RequestParam("userId") String userId,
                                            @RequestParam("title") String title,
-                                           @RequestParam("content") String content) {
-        qnaService.createInquiry(userId, title, content);
+                                           @RequestParam("content") String content,
+                                           @RequestParam("field") String field) { 
+        qnaService.createInquiry(userId, title, content, field);
         return ResponseEntity.ok("문의 등록 완료");
     }
+
 
     @GetMapping("/qna/user")
     @ResponseBody

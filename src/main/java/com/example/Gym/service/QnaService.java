@@ -17,13 +17,15 @@ public class QnaService {
     private final QnaRepository qnaRepository;
     private final UserRepository userRepository;
 
-    public void createInquiry(String userId, String title, String content) {
-        UserEntity user = userRepository.findById(userId).orElseThrow();
+    //문의작성
+    public void createInquiry(String userId, String title, String content, String field) { 
+        UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저 없음"));
         QnaEntity qna = new QnaEntity();
         qna.setUser(user);
         qna.setTitle(title);
         qna.setContent(content);
         qna.setStatus("대기");
+        qna.setField(field); // 분야 설정
         qnaRepository.save(qna);
     }
 
@@ -41,10 +43,11 @@ public class QnaService {
         qna.setStatus("완료");
         qnaRepository.save(qna);
     }
-    
+   
     public List<QnaEntity> getQnaForManager(String username) {
         UserEntity manager = userRepository.findById(username).orElseThrow();
         String field = manager.getField();
         return qnaRepository.findByStatusAndUser_Field("미답변", field);
     }
+
 }
