@@ -10,10 +10,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import lombok.Data;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @EnableJpaAuditing 
+@Data
 public abstract class BaseEntity {
 
     @CreatedDate

@@ -42,7 +42,9 @@ public class LoginController {
             if (user.getRole() == Role.ROLE_MANAGER) {
                 return "redirect:/qna/manager/view";
             } else {
-                return "redirect:/myPage";
+
+                return "redirect:/qna/user/view"; // 일반 회원 메인 페이지
+
             }
 
         } else {
@@ -51,8 +53,4 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/myPage")
-    public String myPage() {
-        return "myPage"; // 뷰 이름
-    }
 }
