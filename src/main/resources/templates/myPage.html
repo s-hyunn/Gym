@@ -25,28 +25,37 @@
         </tr>
       </thead>
       <tbody th:if="${qnaList != null}">
-        <tr th:each="qna, iterStat : ${qnaList}">
-          <td th:text="${qna.qno}">1</td>
-          <td th:text="${qna.user.id}">작성자</td>
-          <td th:text="${qna.title}">제목</td>
-          <td th:text="${qna.content}">내용</td>
-          <td>
-            <span th:if="${qna.status != '답변완료'}" th:text="${qna.status}">상태</span>
-            <a th:if="${qna.status == '답변완료'}"
-               href="javascript:void(0);"
-               th:onclick="'toggleAnswer(' + ${iterStat.index} + ');'"
-               class="answer-toggle">답변보기</a>
-          </td>
-          <td th:text="${#temporals.format(qna.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</td>
-        </tr>
-        <tr th:each="qna, iterStat : ${qnaList}" th:if="${qna.status == '답변완료'}"
-            th:id="'answerRow-' + ${iterStat.index}" class="answer-row">
-          <td colspan="6">
-            <strong>답변:</strong>
-            <div th:text="${qna.answer}">답변 내용</div>
-          </td>
-        </tr>
-      </tbody>
+		  <!-- 하나의 질문+답변 세트를 반복 -->
+		  <th:block th:each="qna, iterStat : ${qnaList}">
+		    <!-- 질문 행 -->
+		    <tr>
+		      <td th:text="${qna.qno}">1</td>
+		      <td th:text="${qna.user.id}">작성자</td>
+		      <td th:text="${qna.title}">제목</td>
+		      <td th:text="${qna.content}">내용</td>
+		      <td>
+		        <span th:if="${qna.status != '답변완료'}"
+		              th:text="${qna.status}">상태</span>
+		
+		        <a th:if="${qna.status == '답변완료'}"
+		           href="javascript:void(0);"
+		           th:onclick="'toggleAnswer(' + ${iterStat.index} + ');'"
+		           class="answer-toggle">답변보기</a>
+		      </td>
+		      <td th:text="${#temporals.format(qna.createdAt, 'yyyy-MM-dd HH:mm')}">작성일</td>
+		    </tr>
+		
+		    <!-- 답변 행 (해당 글 아래에만 감춰져 있다가 토글) -->
+		    <tr th:if="${qna.status == '답변완료'}"
+		        th:id="'answerRow-' + ${iterStat.index}"
+		        class="answer-row" style="display:none;">
+		      <td colspan="6">
+		        <strong>답변:</strong>
+		        <div th:text="${qna.answer}">답변 내용</div>
+		      </td>
+		    </tr>
+		  </th:block>
+		</tbody>
     </table>
   </div>
 
