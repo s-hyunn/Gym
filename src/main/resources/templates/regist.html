@@ -1,23 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>회원 등록</title>
+    <link rel="stylesheet" type="text/css" href="/style.css">
 </head>
 <body>
-<h1>✅ 사용자 등록 (회원 또는 매니저)</h1>
-  <form method="post" action="/user/register">
-    <label>ID: <input name="id" /></label><br>
-    <label>PW: <input name="pw" type="password" /></label><br>
-    <label>이름: <input name="name" /></label><br>
-    <label>역할: 
-      <select name="role">
-        <option value="ROLE_USER">일반 사용자</option>
-        <option value="ROLE_MANAGER">매니저</option>
-      </select>
-    </label><br>
-    <label>분야 (매니저용): <input name="field" /></label><br>
-    <button type="submit">회원 등록</button>
-  </form>
+    <div class="form-card">
+        <h2>✅ 사용자 등록</h2>
+        <form method="post" action="/user/register">
+            <div class="form-group">
+                <label for="id">ID</label>
+                <input type="text" id="id" name="id" required>
+            </div>
+
+            <div class="form-group">
+                <label for="pw">PW</label>
+                <input type="password" id="pw" name="pw" required>
+            </div>
+
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="role">역할</label>
+                <select id="role" name="role">
+                    <option value="user">일반 사용자</option>
+                    <option value="manager">매니저</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="field">분야 (매니저용)</label>
+                <input type="text" id="field" name="field">
+            </div>
+
+            <button type="submit">회원 등록</button>
+        </form>
+    </div>
 </body>
 </html>
