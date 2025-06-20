@@ -7,14 +7,14 @@
 <body>
 
 <h1>🔐 로그인</h1>
-<form method="post" action="http://localhost:8090/login">
+<form method="post" action="/login">
   <label>ID: <input name="id" /></label><br>
   <label>PW: <input name="pw" type="password" /></label><br>
   <button type="submit">로그인</button>
 </form>
 
   <h1>✅ 사용자 등록 (회원 또는 매니저)</h1>
-  <form method="post" action="http://localhost:8090/user/register">
+  <form method="post" action="/user/register">
     <label>ID: <input name="id" /></label><br>
     <label>PW: <input name="pw" type="password" /></label><br>
     <label>이름: <input name="name" /></label><br>
@@ -31,7 +31,7 @@
   <hr>
 
   <h1>📝 문의 작성</h1>
-  <form method="post" action="http://localhost:8090/qna">
+  <form method="post" action="/qna">
     <label>작성자 ID: <input name="userId" /></label><br>
     <label>제목: <input name="title" /></label><br>
     <label>내용: <textarea name="content" rows="4" cols="50"></textarea></label><br>
@@ -41,7 +41,7 @@
   <hr>
 
   <h1>📄 마이페이지 - 내가 남긴 문의 조회</h1>
-  <form method="get" action="http://localhost:8090/qna/user">
+  <form method="get" action="/qna/user">
     <label>작성자 ID: <input name="userId" /></label>
     <button type="submit">조회</button>
   </form>
@@ -49,7 +49,7 @@
   <hr>
 
   <h1>📩 매니저페이지 - 담당 분야 문의 조회</h1>
-  <form method="get" action="http://localhost:8090/qna/manager">
+  <form method="get" action="/qna/manager">
     <label>담당 분야: <input name="field" /></label>
     <button type="submit">조회</button>
   </form>

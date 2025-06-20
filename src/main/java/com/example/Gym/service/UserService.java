@@ -37,4 +37,9 @@ public class UserService {
     public UserEntity getUser(String id) {
         return userRepository.findById(id).orElse(null);
     }
+    
+
+    public boolean isDuplicateId(String id) {
+        return userRepository.existsById(id);
+    }
 }

@@ -7,7 +7,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -16,11 +15,9 @@ import lombok.Data;
 @Data
 public class QnaEntity extends BaseEntity {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "qna_seq")
-	@SequenceGenerator(name = "qna_seq", sequenceName = "QNA_SEQ", allocationSize = 1)
-	private Long qno;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long qno;
 
     @ManyToOne
     @JoinColumn(name = "userid")
@@ -31,8 +28,11 @@ public class QnaEntity extends BaseEntity {
     @Lob
     private String content;
 
-    private String status; // 대기 / 완료
+    private String status;
 
     @Lob
     private String answer;
+
+    private String field; // 추가: 해당 문의 분야
 }
+

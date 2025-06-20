@@ -9,4 +9,6 @@ import com.example.Gym.enums.Role;
 
 public interface UserRepository extends JpaRepository<UserEntity, String> {
     List<UserEntity> findByRole(Role role); // 매니저 목록용
+    
+    boolean existsById(String id);
 }
