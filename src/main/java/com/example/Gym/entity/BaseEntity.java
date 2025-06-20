@@ -14,7 +14,6 @@ import lombok.Data;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
-@EnableJpaAuditing 
 @Data
 public abstract class BaseEntity {
 
