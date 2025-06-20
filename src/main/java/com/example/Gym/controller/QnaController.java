@@ -24,13 +24,12 @@ public class QnaController {
     private final QnaService qnaService;
 
     @PostMapping("/qna")
-    @ResponseBody
-    public ResponseEntity<?> createInquiry(@RequestParam("userId") String userId,
+    public String createInquiry(@RequestParam("userId") String userId,
                                            @RequestParam("title") String title,
                                            @RequestParam("content") String content,
                                            @RequestParam("field") String field) { 
         qnaService.createInquiry(userId, title, content, field);
-        return ResponseEntity.ok("문의 등록 완료");
+        return "redirect:/qna/user/view";
     }
 
 
@@ -68,4 +67,19 @@ public class QnaController {
 
         return "manager_qna"; // 타임리프 뷰 반환
     }
+    
+    @GetMapping("/qna/user/view")
+    public String showUserQnaPage(HttpServletRequest request, Model model) {
+    	UserEntity loginUser = (UserEntity) request.getSession().getAttribute("loginUser");
+
+        if (loginUser == null) {
+            return "redirect:/login"; // 비로그인 상태면 로그인 페이지로
+        }
+        String id = loginUser.getId();
+        List<QnaEntity> qnaList = qnaService.getUserInquiries(id);
+        model.addAttribute("qnaList", qnaList);
+
+        return "myPage"; // 타임리프 뷰 반환
+    }
 }
+

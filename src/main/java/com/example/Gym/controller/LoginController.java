@@ -37,7 +37,7 @@ public class LoginController {
             if (user.getRole() == Role.ROLE_MANAGER) {
                 return "redirect:/qna/manager/view";
             } else {
-                return "redirect:/myPage"; // 일반 회원 메인 페이지
+                return "redirect:/qna/user/view"; // 일반 회원 메인 페이지
             }
         } else {
             model.addAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
@@ -45,8 +45,4 @@ public class LoginController {
         }
     }
     
-    @GetMapping("/myPage")
-    public String myPage() {
-    	return "myPage";
-    }
 }
