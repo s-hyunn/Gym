@@ -17,15 +17,15 @@ public class QnaService {
     private final QnaRepository qnaRepository;
     private final UserRepository userRepository;
 
-    //문의작성
-    public void createInquiry(String userId, String title, String content, String field) { 
+    // 문의 작성
+    public void createInquiry(String userId, String title, String content, String field) {
         UserEntity user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("유저 없음"));
         QnaEntity qna = new QnaEntity();
         qna.setUser(user);
         qna.setTitle(title);
         qna.setContent(content);
-        qna.setStatus("대기");
-        qna.setField(field); // 분야 설정
+        qna.setStatus("미답변");  // 통일된 상태값
+        qna.setField(field);
         qnaRepository.save(qna);
     }
 
@@ -34,20 +34,25 @@ public class QnaService {
     }
 
     public List<QnaEntity> getManagerInquiries(String field) {
-        return qnaRepository.findByStatusAndUser_Field("대기", field);
+        return qnaRepository.findByStatusAndField("미답변", field);
+    }
+
+    public List<QnaEntity> getFilteredInquiries(String status, String field) {
+        return qnaRepository.findByStatusAndField(status, field);
     }
 
     public void answer(Long qno, String answer) {
         QnaEntity qna = qnaRepository.findById(qno).orElseThrow();
         qna.setAnswer(answer);
-        qna.setStatus("완료");
+        qna.setStatus("답변완료");
         qnaRepository.save(qna);
     }
-   
-    public List<QnaEntity> getQnaForManager(String username) {
-        UserEntity manager = userRepository.findById(username).orElseThrow();
-        String field = manager.getField();
-        return qnaRepository.findByStatusAndUser_Field("미답변", field);
-    }
 
+    public void deleteAnswer(Long qno) {
+        QnaEntity qna = qnaRepository.findById(qno).orElseThrow();
+        qna.setAnswer(null);
+        qna.setStatus("미답변");
+        qnaRepository.save(qna);
+    }
 }
+	

@@ -27,11 +27,10 @@ public class QnaController {
     public String createInquiry(@RequestParam("userId") String userId,
                                            @RequestParam("title") String title,
                                            @RequestParam("content") String content,
-                                           @RequestParam("field") String field) { 
+                                           @RequestParam("field") String field) {
         qnaService.createInquiry(userId, title, content, field);
         return "redirect:/qna/user/view";
     }
-
 
     @GetMapping("/qna/user")
     @ResponseBody
@@ -48,24 +47,40 @@ public class QnaController {
     @PostMapping("/qna/answer")
     @ResponseBody
     public String answerQna(@RequestParam("qno") Long qno,
-                                       @RequestParam("answer") String answer) {
+                            @RequestParam("answer") String answer) {
         qnaService.answer(qno, answer);
-        return "redirect:/manager_qna";
+        return "redirect:/qna/manager/view";
+    }
+
+    @PostMapping("/qna/deleteAnswer")
+    public String deleteAnswer(@RequestParam("qno") Long qno) {
+        qnaService.deleteAnswer(qno);
+        return "redirect:/qna/manager/view";
+
     }
 
     @GetMapping("/qna/manager/view")
-    public String showManagerQnaPage(HttpServletRequest request, Model model) {
-        UserEntity loginUser = (UserEntity) request.getSession().getAttribute("loginUser");
+    public String showManagerQnaPage(HttpServletRequest request,
+                                     @RequestParam(value = "status", required = false) String status,
+                                     Model model) {
 
+        UserEntity loginUser = (UserEntity) request.getSession().getAttribute("loginUser");
         if (loginUser == null) {
-            return "redirect:/login"; // 비로그인 상태면 로그인 페이지로
+            return "redirect:/login";
         }
 
-        String id = loginUser.getId();
-        List<QnaEntity> qnaList = qnaService.getManagerInquiries(id);
-        model.addAttribute("qnaList", qnaList);
+        String field = loginUser.getField();
+        List<QnaEntity> qnaList;
 
-        return "manager_qna"; // 타임리프 뷰 반환
+        if (status != null && !status.isEmpty()) {
+            qnaList = qnaService.getFilteredInquiries(status, field);
+        } else {
+            qnaList = qnaService.getManagerInquiries(field);
+        }
+
+        model.addAttribute("qnaList", qnaList);
+        model.addAttribute("status", status);
+        return "manager_qna";
     }
     
     @GetMapping("/qna/user/view")
