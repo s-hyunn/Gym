@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.Gym.entity.QnaEntity;
 import com.example.Gym.entity.UserEntity;
-import com.example.Gym.service.QnaService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,7 +48,7 @@ public class QnaController {
     public ResponseEntity<?> answerQna(@RequestParam("qno") Long qno,
                                        @RequestParam("answer") String answer) {
         qnaService.answer(qno, answer);
-        return ResponseEntity.ok("답변 완료");
+        return "redirect:/manager";
     }
 
     @GetMapping("/qna/manager/view")

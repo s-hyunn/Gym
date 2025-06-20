@@ -1,5 +1,6 @@
 package com.example.Gym.controller;
 
+
 import com.example.Gym.entity.UserEntity;
 import com.example.Gym.enums.Role;
 import com.example.Gym.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequiredArgsConstructor
@@ -25,6 +27,7 @@ public class LoginController {
 
         if (success) {
             UserEntity user = userService.getUser(id);
+
             request.getSession().setAttribute("loginUser", user);
 
             // 역할에 따라 리다이렉트
@@ -37,5 +40,17 @@ public class LoginController {
             model.addAttribute("error", "아이디 또는 비밀번호가 잘못되었습니다.");
             return "login"; // 다시 로그인 페이지로
         }
+        else {
+        	return "redirect:/login";
+        }
+    }
+    
+    @GetMapping("/manager")
+    public String manager() {
+    	return "manager";
+    }
+    @GetMapping("/myPage")
+    public String myPage() {
+    	return "myPage";
     }
 }
